@@ -1,0 +1,7 @@
+<h3> Update fake schema </h3>
+
+<form method='POST'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit' value='Submit'>Update schema </button>
+</form>

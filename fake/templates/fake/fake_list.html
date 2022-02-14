@@ -1,0 +1,36 @@
+<h3>Data schemas</h3>
+<button type='submit'><a href="{% url 'create' %}">New schema</a></button>
+<br><br>  
+
+<div>
+    <button><a href="{% url 'export_csv' %}">Download CSV</a></button>
+</div>
+<br><br>
+<div style='border: 1px blue solid;'>
+{% if object_list %}
+<table>
+    <tr><p>
+        <th>#</th>
+        <th>Title</th>
+        <th>Modified</th>
+        <th>Actions</th>
+    </tr></p>
+    
+    <tr><p>
+            {% for test_user in object_list%}
+            <td>{{forloop.counter}} </td>
+            <td>{{test_user.name}}</td>
+            <td><small>created:{{test_user.created_at }}</small></td> 
+                <td>
+                    <a href="{% url 'update' test_user.id %}">Update</a> 
+                    <a href="{% url 'delete' test_user.id %}">Delete</a>
+                
+                </td>
+        </p>
+    </tr>
+    {% empty %}
+        <p>no items in list<p>
+    {%endfor%}
+</table></div>
+
+{% endif %}
