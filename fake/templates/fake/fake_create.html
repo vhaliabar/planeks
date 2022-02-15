@@ -1,3 +1,7 @@
+{% extends 'fake\base.html' %}
+{% block  content %}
+
+
 <h3> Create fake schema </h3>
 
 <form method='POST'>
@@ -5,3 +9,6 @@
     {{form.as_p}}
     <button type='submit' value='Submit'>Create schema </button>
 </form>
+
+
+{% endblock %}

@@ -28,10 +28,5 @@ class Test(models.Model):
     
     class Meta:
         ordering = ['-name']
-        
-    @property
-    def date_only(self):
-        only_date = str(self.created_at.date())
-        print(only_date)
-        return 45
+
 
