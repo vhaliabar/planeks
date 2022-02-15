@@ -1,0 +1,13 @@
+{% block  content %}
+
+
+<h3> Login: </h3>
+
+<form method='POST'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit' value='Submit'> Login </button>
+</form>
+
+
+{% endblock %}

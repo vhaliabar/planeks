@@ -1,4 +1,5 @@
-
+{% extends 'fake/base.html' %}
+{% block  content %}
 
     <h2> Are you sure you want to delete post?</h2>
     <p>"{{test.name}}", <small>({{test.company}})</small></p>
@@ -7,3 +8,6 @@
         {% csrf_token %}
         <input class="btn btn-secondary" type='submit' value='Delete post'>
         </form>
+
+
+{% endblock %}
