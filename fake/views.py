@@ -5,6 +5,7 @@ from .models import Test
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 import csv
+from .forms import TestCreateForm, CustomAuthForm
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,6 +17,7 @@ class CustomLoginView(LoginView):
     template_name = 'fake/login.html'
     fields = '__all__'
     redirect_authenticated_user = True
+    form_class = CustomAuthForm
     
     def get_success_url(self):
         return reverse_lazy('home')
@@ -31,10 +33,11 @@ class HomeView(LoginRequiredMixin, ListView):
     
 
 class TestCreate(LoginRequiredMixin, CreateView):
-    model = Test
-    fields = ['name', 'job', 'email', 'age', 'company']
+    #model = Test
+    #fields = ['name', 'job', 'email', 'age', 'company']
     template_name = 'fake/fake_create.html'
     success_url = reverse_lazy('home')
+    form_class = TestCreateForm
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -44,9 +47,10 @@ class TestCreate(LoginRequiredMixin, CreateView):
 
 class TestUpdate(LoginRequiredMixin, UpdateView):
     model = Test
-    fields = ['name', 'job', 'email', 'age', 'company']
+    #fields = ['name', 'job', 'email', 'age', 'company']
     template_name= 'fake/update.html'
     success_url = reverse_lazy('home')
+    form_class = TestCreateForm
     
 class TestDelete(LoginRequiredMixin, DeleteView):
     model = Test
@@ -60,7 +64,7 @@ def export_csv(request):
     writer = csv.writer(response)
     writer.writerow(['User', 'Name', 'Job', 'Email', 'Age', 'Company', 'Updated time'])
     
-    for element in Test.objects.all().values_list('user', 'name', 'job', 'email', 'age', 'company', 'created_at'):
+    for element in Test.objects.filter(user=request.user).values_list('user', 'name', 'job', 'email', 'age', 'company', 'created_at'):
         writer.writerow(element)
     response['Content-Disposition']= 'attachment; filename="fake_data.csv"'
     
