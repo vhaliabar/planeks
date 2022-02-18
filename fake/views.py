@@ -61,10 +61,10 @@ class TestDelete(LoginRequiredMixin, DeleteView):
 def export_csv(request):
     response = HttpResponse(content_type='text/csv')
     
-    writer = csv.writer(response)
-    writer.writerow(['User', 'Name', 'Job', 'Email', 'Age', 'Company', 'Updated time'])
+    writer = csv.writer(response, delimiter=";")
+    writer.writerow(['Name', 'Job', 'Email', 'Age', 'Company', 'Updated time'])
     
-    for element in Test.objects.filter(user=request.user).values_list('user', 'name', 'job', 'email', 'age', 'company', 'created_at'):
+    for element in Test.objects.filter(user=request.user).values_list('name', 'job', 'email', 'age', 'company', 'created_at'):
         writer.writerow(element)
     response['Content-Disposition']= 'attachment; filename="fake_data.csv"'
     
